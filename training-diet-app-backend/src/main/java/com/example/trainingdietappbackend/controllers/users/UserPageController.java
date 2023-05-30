@@ -3,13 +3,11 @@ package com.example.trainingdietappbackend.controllers.users;
 
 import com.example.trainingdietappbackend.dto.UserDto;
 import com.example.trainingdietappbackend.dto.mapper.mapperUtil.MapperUtil;
-import com.example.trainingdietappbackend.entities.Note;
+import com.example.trainingdietappbackend.entities.Training;
 import com.example.trainingdietappbackend.entities.User;
-import com.example.trainingdietappbackend.repositories.NoteRepository;
 import com.example.trainingdietappbackend.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -25,15 +23,19 @@ public class UserPageController {
     private static final Logger logger = LoggerFactory.getLogger(UserPageController.class);
 
     private UserRepository userRepository;
-    private NoteRepository noteRepository;
 
-    public UserPageController(UserRepository userRepository, NoteRepository noteRepository) {
+    public UserPageController(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.noteRepository = noteRepository;
     }
+    //    private NoteRepository noteRepository;
+//
+//    public UserPageController(UserRepository userRepository, NoteRepository noteRepository) {
+//        this.userRepository = userRepository;
+//        this.noteRepository = noteRepository;
+//    }
 @CrossOrigin
-    @RequestMapping()
-    public ResponseEntity<List<Note>> getUsersNotes() {
+    @RequestMapping("/trainings")
+    public ResponseEntity<List<Training>> getUsersNotes() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = (String) authentication.getPrincipal();
@@ -42,7 +44,7 @@ public class UserPageController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        return ResponseEntity.ok().body(user.getNoteList());
+        return ResponseEntity.ok().body(user.getTrainings());
     }
 
     @RequestMapping("/account")
@@ -60,42 +62,42 @@ public class UserPageController {
 
     }
 
-    @PostMapping
-    @RequestMapping("/add-note")
-    public ResponseEntity<Note> addNote(@RequestBody Note note) {
+//    @PostMapping
+//    @RequestMapping("/add-note")
+//    public ResponseEntity<Note> addNote(@RequestBody Note note) {
+//
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String email = (String) authentication.getPrincipal();
+//        User user = userRepository.findByEmail(email);
+//        if (user == null) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+//        note.setOwner(user);
+//        noteRepository.save(note);
+//
+//        return ResponseEntity.ok(note);
+//
+//
+//    }
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = (String) authentication.getPrincipal();
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        note.setOwner(user);
-        noteRepository.save(note);
-
-        return ResponseEntity.ok(note);
-
-
-    }
-
-    @DeleteMapping
-    @RequestMapping(("/delete-note/{id}"))
-    public ResponseEntity<Note> deleteNote(@PathVariable(name = "id") Long id) {
-        logger.error("logger");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = (String) authentication.getPrincipal();
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        Note delted = noteRepository.findById(id).orElseThrow();
-        logger.error(delted.getTitle());
-        noteRepository.deleteById(id);
-
-
-
-        return ResponseEntity.ok(delted);
-
-
-    }
+//    @DeleteMapping
+//    @RequestMapping(("/delete-note/{id}"))
+//    public ResponseEntity<Note> deleteNote(@PathVariable(name = "id") Long id) {
+//        logger.error("logger");
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String email = (String) authentication.getPrincipal();
+//        User user = userRepository.findByEmail(email);
+//        if (user == null) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+//        Note delted = noteRepository.findById(id).orElseThrow();
+//        logger.error(delted.getTitle());
+//        noteRepository.deleteById(id);
+//
+//
+//
+//        return ResponseEntity.ok(delted);
+//
+//
+//    }
 }

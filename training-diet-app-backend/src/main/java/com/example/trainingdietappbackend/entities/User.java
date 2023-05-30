@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -19,10 +20,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "user_id")
     private Long id;
+    @Column(length = 200)
+    private String firstName;
+    @Column(length = 200)
+    private String lastName;
+    private LocalDate birthDate;
+    private Double height;
+    private Double weight;
+
+
+
 
     @JsonManagedReference
     @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Note> noteList = new ArrayList<>();
+    private List<Diet> diets = new ArrayList<>();
     private String loginName;
 
     @JsonProperty("email")
@@ -41,11 +52,16 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Authority> authorities = new HashSet<>();
 
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Training> trainings = new ArrayList<>();
     // Getters and Setters
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "statistics_id" ,referencedColumnName = "id")
+private  Statistics statistics;
 
-
-    public User(List<Note> noteList, String loginName, String email, String password, String photo, Set<Authority> authorities) {
-        this.noteList = noteList;
+    public User( String loginName, String email, String password, String photo, Set<Authority> authorities) {
         this.loginName = loginName;
         this.email = email;
         this.password = password;
@@ -53,20 +69,24 @@ public class User {
         this.authorities = authorities;
     }
 
-    public User(List<Note> noteList, String loginName, String email, String password, String photo) {
-        this.noteList = noteList;
+    public User( String loginName, String email, String password, String photo) {
         this.loginName = loginName;
         this.email = email;
         this.password = password;
         this.photo = photo;
     }
 
-    public List<Note> getNoteList() {
-        return noteList;
+    public User(Long id, String loginName, String email, String password) {
+        this.id = id;
+        this.loginName = loginName;
+        this.email = email;
+        this.password = password;
     }
 
-    public void setNoteList(List<Note> noteList) {
-        this.noteList = noteList;
+    public User(String loginName, String email, String password) {
+        this.loginName = loginName;
+        this.email = email;
+        this.password = password;
     }
 
     public Long getId() {
@@ -119,16 +139,27 @@ public class User {
         this.email = email;
     }
 
+    public List<Training> getTrainings() {
+        return trainings;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", noteList=" + noteList +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate=" + birthDate +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", diets=" + diets +
                 ", loginName='" + loginName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", photo='" + photo + '\'' +
                 ", authorities=" + authorities +
+                ", trainings=" + trainings +
+                ", statistics=" + statistics +
                 '}';
     }
 }

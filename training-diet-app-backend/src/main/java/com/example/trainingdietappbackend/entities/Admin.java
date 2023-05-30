@@ -16,9 +16,14 @@ public class Admin extends User{
     @Column(name = "canmanage")
     private  boolean canManageUsers;
 
-    public Admin(List<Note> noteList, String loginName, String email, String password, String photo,boolean canManageUsers) {
-        super(noteList, loginName, email, password, photo);
+    private boolean canManageMeals;
+
+    private boolean canManageExcercise;
+    public Admin( String loginName, String email, String password, String photo,boolean canManageUsers,boolean canManageMeals,boolean canManageExcercise) {
+        super( loginName, email, password, photo);
         this.canManageUsers = canManageUsers;
+        this.canManageMeals = canManageMeals;
+        this.canManageExcercise = canManageExcercise;
 
     }
 

@@ -4,16 +4,12 @@ package com.example.trainingdietappbackend.controllers.users;
 import com.example.trainingdietappbackend.entities.Authority;
 import com.example.trainingdietappbackend.entities.User;
 import com.example.trainingdietappbackend.repositories.AuthoritiesRepository;
-import com.example.trainingdietappbackend.repositories.NoteRepository;
 import com.example.trainingdietappbackend.repositories.UserRepository;
 import com.example.trainingdietappbackend.service.UserDataValidationImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/public/")
@@ -27,16 +23,16 @@ private AuthoritiesRepository authoritiesRepository;
     private UserRepository userRepository;
 
 
-    private NoteRepository noteRepository;
+//    private NoteRepository noteRepository;
 
     private PasswordEncoder passwordEncoder;
 
     private UserDataValidationImpl userDataValidation;
 
-    public CreateUserController(AuthoritiesRepository authoritiesRepository, UserRepository userRepository, NoteRepository noteRepository, PasswordEncoder passwordEncoder, UserDataValidationImpl userDataValidation) {
+    public CreateUserController(AuthoritiesRepository authoritiesRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, UserDataValidationImpl userDataValidation) {
         this.authoritiesRepository = authoritiesRepository;
         this.userRepository = userRepository;
-        this.noteRepository = noteRepository;
+//        this.noteRepository = noteRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDataValidation = userDataValidation;
     }
@@ -44,6 +40,7 @@ private AuthoritiesRepository authoritiesRepository;
     @PostMapping
     @RequestMapping("/create-user")
     public ResponseEntity<User> saveUserTodb(@RequestBody User requestUser) {
+
         if (userRepository.existsByEmail(requestUser.getEmail())) {
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).build();
         }
@@ -55,7 +52,9 @@ private AuthoritiesRepository authoritiesRepository;
         authority.setAuthority("ROLE_USER");
         authority.setUser(requestUser);
         authoritiesRepository.save(authority);
-        return ResponseEntity.ok(requestUser);
+        User responseUser = new User();
+        responseUser.setAuthorities(requestUser.getAuthorities());
+        return ResponseEntity.ok(responseUser);
     }
 
 
