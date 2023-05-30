@@ -17,7 +17,7 @@ const HomePage = () => {
       }}
     >
       <ResponsiveAppBar />
-      <div className="container">
+      <div className="containerm">
         <MainDesciption
           img={
             "https://img.freepik.com/free-vector/vector-cartoon-background-gym-with-big-window_33099-1200.jpg?w=2000"

@@ -1,9 +1,9 @@
-.container {
+.containerm {
   margin-top: 100px;
   display: flex;
   justify-content: space-around;
 }
 
-.container > * {
+.containerm > * {
   margin: 0;
 }
