@@ -3,9 +3,13 @@ package com.example.trainingdietappbackend.controllers.users;
 
 import com.example.trainingdietappbackend.dto.UserDto;
 import com.example.trainingdietappbackend.dto.mapper.mapperUtil.MapperUtil;
+import com.example.trainingdietappbackend.entities.Excercise;
 import com.example.trainingdietappbackend.entities.Training;
 import com.example.trainingdietappbackend.entities.User;
+import com.example.trainingdietappbackend.entities.additional.ExcerciseAndAlternatives;
+import com.example.trainingdietappbackend.entities.enums.TrainingType;
 import com.example.trainingdietappbackend.repositories.UserRepository;
+import com.example.trainingdietappbackend.service.ExcerciseServiceImplement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,13 +24,17 @@ import java.util.List;
 @RequestMapping("/api/public/user-page")
 @CrossOrigin(origins = "*")
 public class UserPageController {
+
+    ExcerciseServiceImplement excerciseServiceImplement;
     private static final Logger logger = LoggerFactory.getLogger(UserPageController.class);
 
     private UserRepository userRepository;
 
-    public UserPageController(UserRepository userRepository) {
+    public UserPageController(ExcerciseServiceImplement excerciseServiceImplement, UserRepository userRepository) {
+        this.excerciseServiceImplement = excerciseServiceImplement;
         this.userRepository = userRepository;
     }
+
     //    private NoteRepository noteRepository;
 //
 //    public UserPageController(UserRepository userRepository, NoteRepository noteRepository) {
@@ -60,6 +68,14 @@ public class UserPageController {
         return ResponseEntity.ok(mapperUser);
 
 
+    }
+
+    @PostMapping
+    @RequestMapping("/excercises")
+    public ResponseEntity<List<ExcerciseAndAlternatives>> get4Excercises( @RequestParam("type")TrainingType type) {
+        List<ExcerciseAndAlternatives> excercises = excerciseServiceImplement.getFOURExcercisesSpecifiedbyTrainngType(type);
+
+return ResponseEntity.ok(excercises);
     }
 
 //    @PostMapping

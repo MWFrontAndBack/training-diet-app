@@ -2,6 +2,8 @@ package com.example.trainingdietappbackend.dbInit;
 
 
 import com.example.trainingdietappbackend.entities.*;
+import com.example.trainingdietappbackend.entities.enums.TrainingType;
+import com.example.trainingdietappbackend.repositories.ExcerciserRepository;
 import com.example.trainingdietappbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,7 +19,7 @@ public class InitDatabase {
     PasswordEncoder passwordEncoder;
 
     @Bean
-    CommandLineRunner commandLineRunner( UserRepository userRepository)
+    CommandLineRunner commandLineRunner(UserRepository userRepository, ExcerciserRepository excerciserRepository)
         {
             return args -> {
 
@@ -50,6 +52,8 @@ String encode =passwordEncoder.encode("haslo");
                         .password(encode1)
                         .email("user1@gmail.com")
                         .build();
+
+
 
                 Authority authority1 = new Authority();
                 authority1.setAuthority("ROLE_USER");
@@ -93,8 +97,82 @@ String encode =passwordEncoder.encode("haslo");
                 admin.setAuthorities(authoritiesAdmin);
 
 
+//                save some excercises to db
+                Excercise exercise1 = Excercise.builder()
+                        .name("Exercise 1")
+                        .photo("exercise1.jpg")
+                        .series(3)
+                        .reps(10)
+                        .trainingType(TrainingType.MOBILITY)
+                        .levelOfAdvance(5)
+                        .build();
 
-userRepository.save(admin);
+                Excercise exercise2 = Excercise.builder()
+                        .name("Exercise 2")
+                        .photo("exercise2.jpg")
+                        .series(4)
+                        .reps(12)
+                        .trainingType(TrainingType.STRENGTH)
+                        .levelOfAdvance(4)
+                        .build();
+
+                Excercise exercise3 = Excercise.builder()
+                        .name("Exercise 3")
+                        .photo("exercise3.jpg")
+                        .series(5)
+                        .reps(15)
+                        .trainingType(TrainingType.ENDURANCE)
+                        .levelOfAdvance(3)
+                        .build();
+
+                Excercise exercise4 = Excercise.builder()
+                        .name("Exercise 4")
+                        .photo("exercise4.jpg")
+                        .series(3)
+                        .reps(8)
+                        .trainingType(TrainingType.STRENGTH)
+                        .levelOfAdvance(5)
+                        .build();
+
+                Excercise exercise5 = Excercise.builder()
+                        .name("Exercise 5")
+                        .photo("exercise5.jpg")
+                        .series(4)
+                        .reps(10)
+                        .trainingType(TrainingType.MOBILITY)
+                        .levelOfAdvance(4)
+                        .build();
+
+                Excercise exercise6 = Excercise.builder()
+                        .name("Exercise 6")
+                        .photo("exercise6.jpg")
+                        .series(3)
+                        .reps(12)
+                        .trainingType(TrainingType.ENDURANCE)
+                        .levelOfAdvance(3)
+                        .build();
+
+
+                Excercise exercise7 = Excercise.builder()
+                        .name("Exercise 15")
+                        .photo("exercise15.jpg")
+                        .series(5)
+                        .reps(15)
+                        .trainingType(TrainingType.STRENGTH)
+                        .levelOfAdvance(4)
+                        .build();
+                List<Excercise> exercises = new ArrayList<>();
+                exercises.add(exercise1);
+                exercises.add(exercise2);
+                exercises.add(exercise3);
+                exercises.add(exercise4);
+                exercises.add(exercise5);
+                exercises.add(exercise6);
+                exercises.add(exercise7);
+excerciserRepository.saveAll(exercises);
+
+
+                userRepository.save(admin);
 
 
             };

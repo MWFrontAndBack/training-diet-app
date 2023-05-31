@@ -9,9 +9,9 @@ import Typography from "@mui/material/Typography";
 
 import image1 from "../../../assets/traininguser.jpg";
 import image2 from "../../../assets/subscribe.jpg";
-
 import "@splidejs/react-splide/css/sea-green";
 import "./userp.css";
+import { Link } from "react-router-dom";
 const UserPageMain = () => {
   return (
     <Splide aria-label="My Favorite Images">
@@ -39,7 +39,7 @@ const UserPageMain = () => {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="medium">Create</Button>
+              <Link to="/user-page/create-training">Create Training</Link>
             </CardActions>
           </Card>
         </div>
