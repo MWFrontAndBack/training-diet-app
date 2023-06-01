@@ -10,6 +10,7 @@ import UserAccount from "../../components/templates/userpage/account/account";
 import ChooseTraining from "../../components/templates/userpage/create-training/choosetraining";
 import TrainingCustomization from "../../components/templates/userpage/create-training/trainCustomization/traincustomization";
 import CustomExcercises from "../../components/templates/userpage/create-training/excercisesCustomization/excercisecustom";
+import ExcerciseDetails from "../Trainings/ExcerciseDetails/excerciseDetails";
 
 const Main = () => {
   return (
@@ -29,6 +30,10 @@ const Main = () => {
       <Route
         path="/user-page/create-training/train-customize/excercise"
         element={<CustomExcercises />}
+      />
+      <Route
+        path="user-page/trainings/details/:id"
+        element={<ExcerciseDetails />}
       />
     </Routes>
   );

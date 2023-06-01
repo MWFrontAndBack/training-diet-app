@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./choose.css";
+import backgroundSVG from "../../../../assets/userpage.svg";
+import OptionsNavbar from "../../navbar/optionsNavbar/optionsnavbar";
 
 const ChooseTraining = () => {
   const [select, setSelect] = useState("");
@@ -17,29 +20,38 @@ const ChooseTraining = () => {
     setSelect(event.target.value);
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        <input
-          type="radio"
-          value="trainAndDiet"
-          name="anserw"
-          onChange={handleChange}
-        />
-        Training with Diet
-      </label>
+    <div>
+      <OptionsNavbar />
+      <div
+        className="center"
+        style={{
+          backgroundImage: `url(${backgroundSVG})`,
+          height: "100vh",
+          backgroundSize: "cover",
+        }}
+      >
+        <form className="login-form" onSubmit={handleSubmit}>
+          <label className="customlb">Training with Diet</label>
 
-      <label>
-        <input
-          type="radio"
-          value="train"
-          name="anserw"
-          onChange={handleChange}
-        />
-        Only Training
-      </label>
+          <input
+            type="radio"
+            value="trainAndDiet"
+            name="anserw"
+            onChange={handleChange}
+          />
 
-      <input type="submit" value="Submit" />
-    </form>
+          <label className="customlb">Only Training</label>
+          <input
+            type="radio"
+            value="train"
+            name="anserw"
+            onChange={handleChange}
+          />
+
+          <input className=" login-button " type="submit" value="Submit" />
+        </form>
+      </div>
+    </div>
   );
 };
 

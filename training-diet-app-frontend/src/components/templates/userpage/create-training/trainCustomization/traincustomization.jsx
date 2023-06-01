@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomExcercises from "../excercisesCustomization/excercisecustom";
+import "./customization.css";
+import OptionsNavbar from "../../../navbar/optionsNavbar/optionsnavbar";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import backgroundSVG from "../../../../../assets/userpage.svg";
 
 const TrainingCustomization = () => {
   const [excercise, setExcercise] = useState("");
@@ -13,12 +18,14 @@ const TrainingCustomization = () => {
   const saveTrainig = (event) => {
     event.preventDefault();
     console.log("save");
+    let exercices = userData.map((data) => data.excercise);
+    console.log(exercices);
     const trainingToSave = {
       name: trainingType,
       photo: photo,
       description: descriptio,
       maxAge: 99,
-      excercieses: userData.excercise,
+      excercieses: exercices,
     };
     const username = localStorage.getItem("email");
     const password = localStorage.getItem("password");
@@ -101,42 +108,50 @@ const TrainingCustomization = () => {
       });
   };
   return (
-    <div>
-      <form onSubmit={HandleSubmit}>
-        <label>
-          <input
-            type="radio"
-            value="STRENGTH"
-            name="return"
-            onChange={handleChange}
-          />
-          Strength Training
-        </label>
+    <div
+      style={{
+        backgroundImage: `url(${backgroundSVG})`,
+        height: "100%",
+        backgroundSize: "cover",
+      }}
+    >
+      <OptionsNavbar />
+      <div className="container">
+        <form onSubmit={HandleSubmit}>
+          <label>
+            <input
+              type="radio"
+              value="STRENGTH"
+              name="return"
+              onChange={handleChange}
+            />
+            Strength Training
+          </label>
 
-        <label>
-          <input
-            type="radio"
-            value="MOBILITY"
-            name="return"
-            onChange={handleChange}
-          />
-          MobilityTraining
-        </label>
+          <label>
+            <input
+              type="radio"
+              value="MOBILITY"
+              name="return"
+              onChange={handleChange}
+            />
+            Mobility Training
+          </label>
 
-        <label>
-          <input
-            type="radio"
-            value="ENDURANCE"
-            name="return"
-            onChange={handleChange}
-          />
-          Endurance training
-        </label>
+          <label>
+            <input
+              type="radio"
+              value="ENDURANCE"
+              name="return"
+              onChange={handleChange}
+            />
+            Endurance Training
+          </label>
 
-        <input type="submit" value="Submit" />
-      </form>
-
-      <div>
+          <input className="submit-button" type="submit" value="Submit" />
+        </form>
+      </div>
+      <div className="user-data">
         {userData ? (
           userData.map((item, index) => (
             <div key={index}>
@@ -144,12 +159,18 @@ const TrainingCustomization = () => {
             </div>
           ))
         ) : (
-          <p>wybierz rodzaj treningu</p>
+          <p className="warning">Select a training type</p>
         )}
       </div>
 
-      <div>
-        {userData ? <button onClick={saveTrainig}>save</button> : <p></p>}
+      <div className="save-button">
+        {userData ? (
+          <Button variant="contained" onClick={saveTrainig}>
+            Save
+          </Button>
+        ) : (
+          <p></p>
+        )}
       </div>
     </div>
   );

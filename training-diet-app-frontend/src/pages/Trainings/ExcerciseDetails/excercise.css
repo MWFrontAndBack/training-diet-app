@@ -1,0 +1,27 @@
+.exercise-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.exercise-card img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.customText {
+  font-family: "Luckiest Guy", cursive;
+  font-size: 20px;
+}
+.exercise-card .exercise-details {
+  flex-grow: 1;
+}
+
+.alignCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

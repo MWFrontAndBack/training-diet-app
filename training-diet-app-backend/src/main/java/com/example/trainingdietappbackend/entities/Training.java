@@ -36,8 +36,7 @@ public class Training {
     @JoinColumn(name ="user_id" )
     private User owner;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "training", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "training", orphanRemoval = true, cascade = CascadeType.MERGE)
     private List<Excercise> excercieses = new ArrayList<>();
 
 
@@ -92,4 +91,19 @@ public class Training {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
+    @Override
+    public String toString() {
+        return "Training{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", photo='" + photo + '\'' +
+                ", description='" + description + '\'' +
+                ", maxAge=" + maxAge +
+                ", excercieses=" + excercieses +
+                '}';
+    }
 }
+
+
+

@@ -8,6 +8,7 @@ import com.example.trainingdietappbackend.entities.Training;
 import com.example.trainingdietappbackend.entities.User;
 import com.example.trainingdietappbackend.entities.additional.ExcerciseAndAlternatives;
 import com.example.trainingdietappbackend.entities.enums.TrainingType;
+import com.example.trainingdietappbackend.repositories.ExcerciserRepository;
 import com.example.trainingdietappbackend.repositories.TrainingRepository;
 import com.example.trainingdietappbackend.repositories.UserRepository;
 import com.example.trainingdietappbackend.service.ExcerciseServiceImplement;
@@ -30,11 +31,13 @@ public class UserPageController {
     private static final Logger logger = LoggerFactory.getLogger(UserPageController.class);
 private TrainingRepository trainingRepository;
     private UserRepository userRepository;
+    private ExcerciserRepository excerciserRepository;
 
-    public UserPageController(ExcerciseServiceImplement excerciseServiceImplement, TrainingRepository trainingRepository, UserRepository userRepository) {
+    public UserPageController(ExcerciseServiceImplement excerciseServiceImplement, TrainingRepository trainingRepository, UserRepository userRepository, ExcerciserRepository excerciserRepository) {
         this.excerciseServiceImplement = excerciseServiceImplement;
         this.trainingRepository = trainingRepository;
         this.userRepository = userRepository;
+        this.excerciserRepository = excerciserRepository;
     }
 
     //    private NoteRepository noteRepository;
@@ -84,6 +87,7 @@ return ResponseEntity.ok(excercises);
     @PostMapping
     @RequestMapping("/save-training")
 public ResponseEntity<String> saveTrainingToDb(@RequestBody Training training){
+        logger.info("trainig-saved" + training);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = (String) authentication.getPrincipal();
         User user = userRepository.findByEmail(email);
@@ -91,45 +95,36 @@ public ResponseEntity<String> saveTrainingToDb(@RequestBody Training training){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         training.setOwner(user);
+
+        for (Excercise exercise : training.getExcercieses()) {
+            exercise.setTraining(training);
+        }
+
         trainingRepository.save(training);
+        excerciserRepository.saveAll(training.getExcercieses());
         return ResponseEntity.ok("saved");
     }
-//    @PostMapping
-//    @RequestMapping("/add-note")
-//    public ResponseEntity<Note> addNote(@RequestBody Note note) {
-//
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String email = (String) authentication.getPrincipal();
-//        User user = userRepository.findByEmail(email);
-//        if (user == null) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//        }
-//        note.setOwner(user);
-//        noteRepository.save(note);
-//
-//        return ResponseEntity.ok(note);
-//
-//
-//    }
 
-//    @DeleteMapping
-//    @RequestMapping(("/delete-note/{id}"))
-//    public ResponseEntity<Note> deleteNote(@PathVariable(name = "id") Long id) {
-//        logger.error("logger");
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String email = (String) authentication.getPrincipal();
-//        User user = userRepository.findByEmail(email);
-//        if (user == null) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//        }
-//        Note delted = noteRepository.findById(id).orElseThrow();
-//        logger.error(delted.getTitle());
-//        noteRepository.deleteById(id);
-//
-//
-//
-//        return ResponseEntity.ok(delted);
-//
-//
-//    }
+
+    @DeleteMapping
+    @RequestMapping(("/delete-training/{id}"))
+    public ResponseEntity<Training> deleteNote(@PathVariable(name = "id") Long id) {
+        logger.error("logger");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = (String) authentication.getPrincipal();
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        Training delted = trainingRepository.findById(id).orElseThrow();
+        trainingRepository.deleteById(id);
+
+
+
+        return ResponseEntity.ok(delted);
+
+
+    }
+
+
 }

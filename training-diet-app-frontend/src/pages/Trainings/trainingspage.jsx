@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import TrainingDetails from "./trainingDetails";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import OptionsNavbar from "../../components/templates/navbar/optionsNavbar/optionsnavbar";
 
 const TrainingsPage = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const handleNoteDeletion = (id) => {
+    setUserData((prevUserData) =>
+      prevUserData.filter((item) => item.id !== id)
+    );
+  };
   useEffect(() => {
     const username = localStorage.getItem("email");
     const password = localStorage.getItem("password");
@@ -34,13 +40,14 @@ const TrainingsPage = () => {
   }, []);
   return (
     <div>
+      <OptionsNavbar />
       {loading ? (
         <p>Loading...</p>
       ) : userData ? (
         <div className="parent">
           {userData.map((item) => (
-            <div key={item.id} className="column">
-              <TrainingDetails val={item} />
+            <div className="column">
+              <TrainingDetails val={item} ondelte={handleNoteDeletion} />
             </div>
           ))}
         </div>

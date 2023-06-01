@@ -169,6 +169,20 @@ String encode =passwordEncoder.encode("haslo");
                 exercises.add(exercise5);
                 exercises.add(exercise6);
                 exercises.add(exercise7);
+
+
+                for (int i = 1; i <= 40; i++) {
+                    Excercise exercise = Excercise.builder()
+                            .name("Exercise " + i)
+                            .photo("exercise" + i + ".jpg")
+                            .series(i % 5 + 1)
+                            .reps(i % 10 + 5)
+                            .trainingType(TrainingType.values()[i % 3])
+                            .levelOfAdvance(i % 5 + 1)
+                            .build();
+
+                    exercises.add(exercise);
+                }
 excerciserRepository.saveAll(exercises);
 
 

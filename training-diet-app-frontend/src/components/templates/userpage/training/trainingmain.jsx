@@ -50,36 +50,6 @@ const TrainingMain = () => {
     <div>
       <h2>Main trainings</h2>
     </div>
-    // <div>
-    //   <UserNavbar />
-    //   {/* <div className="all-notes-container"> */}
-    //   {loading ? (
-    //     <p>Loading...</p>
-    //   ) : userData ? (
-    //     <div
-    //       style={{
-    //         backgroundImage: `url(${userBacground})`,
-    //         backgroundSize: "cover",
-    //         backgroundPosition: "center",
-    //         height: "100vh",
-    //       }}
-    //       className="parent"
-    //     >
-    //       {userData.map((item) => (
-    //         <div key={item.id} className="column">
-    //           <NotesSchow
-    //             val={item}
-    //             onNoteDelete={handleNoteDeletion}
-    //             className="note"
-    //           />
-    //         </div>
-    //       ))}
-    //     </div>
-    //   ) : (
-    //     <p>No data available</p>
-    //   )}
-    //   {/* </div> */}
-    // </div>
   );
 };
 

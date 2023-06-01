@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ExcerciseServiceImplement implements ExcercisesSercvice {
@@ -20,14 +21,20 @@ public class ExcerciseServiceImplement implements ExcercisesSercvice {
 
     private static final Logger logger = LoggerFactory.getLogger(ExcerciseServiceImplement.class);
 
+
+    private  List<Excercise> used = new ArrayList<>();
+
+
+
     @Override
     public List<ExcerciseAndAlternatives> getFOURExcercisesSpecifiedbyTrainngType(TrainingType trainingType) {
         List<ExcerciseAndAlternatives> excerciseAndAlternativesList = new ArrayList<>();
-        List<Excercise> fourWithTrainingType = excerciserRepository.findFOURWithTrainingType(trainingType).stream().limit(4).toList();
+        List<Excercise> fourWithTrainingType = excerciserRepository.findAll().stream().filter(t->t.getTrainingType().equals(trainingType)).limit(4).toList();
+        used.addAll(fourWithTrainingType);
         fourWithTrainingType.forEach(t -> {
             ExcerciseAndAlternatives alternatives = new ExcerciseAndAlternatives();
             alternatives.setExcercise(t);
-            List<Excercise> different = findDifferent(fourWithTrainingType,t.getTrainingType());
+            List<Excercise> different = findDifferent(used,t.getTrainingType());
 
 
             alternatives.setAlternatives(different);
@@ -41,15 +48,18 @@ public class ExcerciseServiceImplement implements ExcercisesSercvice {
 
     @Override
     public List<Excercise> findDifferent(List<Excercise> base,TrainingType trainingType) {
-        List<Excercise> differentTwo = new ArrayList<>(new ArrayList<>(excerciserRepository.findAll().stream().filter(l -> l.getTrainingType().equals(trainingType)).toList()).stream().limit(2).toList());
-        logger.info("different" + differentTwo);
-
+        List<Excercise> differentTwo = excerciserRepository.findAll();
         differentTwo.removeAll(base);
-//        if(differentTwo.isEmpty()){
-//            differentTwo.add(new Excercise());
-//            logger.info("differnet" + differentTwo);
-//
-//        }
-        return differentTwo;
+        List<Excercise> limited = differentTwo.stream().filter(t -> t.getTrainingType().equals(trainingType)).limit(2).collect(Collectors.toList());
+
+        if(limited.size()==2) {
+            logger.info("limited" +limited.get(0));
+            logger.info("limited " +limited.get(1));
+            used.add(limited.get(0));
+            used.add(limited.get(1));
+        }
+        logger.info("użyte" + used);
+
+        return limited;
     }
 }

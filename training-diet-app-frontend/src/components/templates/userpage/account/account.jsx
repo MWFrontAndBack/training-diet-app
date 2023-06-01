@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./useracc.css";
 import { useNavigate } from "react-router-dom";
+import OptionsNavbar from "../../navbar/optionsNavbar/optionsnavbar";
 
 const UserAccount = () => {
   const [userData, setUserData] = useState(null);
@@ -44,6 +45,7 @@ const UserAccount = () => {
 
   return (
     <div>
+      <OptionsNavbar />
       <div className="container">
         <div className="content">
           <div className="image-container">

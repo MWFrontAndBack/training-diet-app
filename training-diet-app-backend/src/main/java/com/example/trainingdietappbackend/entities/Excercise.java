@@ -2,6 +2,7 @@ package com.example.trainingdietappbackend.entities;
 
 import com.example.trainingdietappbackend.entities.enums.TrainingType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -58,6 +59,10 @@ public class Excercise {
 
     public String getPhoto() {
         return photo;
+    }
+@JsonIgnore
+    public void setTraining(Training training) {
+        this.training = training;
     }
 
     public void setPhoto(String photo) {

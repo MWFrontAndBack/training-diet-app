@@ -1,12 +1,31 @@
-#parent {
+.right {
   display: flex;
-  margin-left: 100px;
+  flex-direction: column;
 }
 
+.alternatives-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 .left {
   flex: 1;
+  margin-right: 50px;
 }
 
-.right {
+#parent {
+  display: flex;
+  align-items: flex-start;
+}
+
+.altern {
   flex: 1;
+}
+
+h4 {
+  color: rgb(255, 255, 255);
+  font-family: "Luckiest Guy", cursive;
+  font-size: 20px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }

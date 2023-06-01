@@ -1,0 +1,60 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.form {
+  display: inline;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-width: 300px;
+  margin: 0 auto;
+  background-color: white;
+  margin-top: 50px;
+}
+
+.input-field {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.customlb {
+  font-family: "Luckiest Guy", cursive;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.login-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #45a049;
+}
+
+p {
+  color: red;
+  margin-bottom: 10px;
+}
+
+label {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  margin-bottom: 5px;
+}

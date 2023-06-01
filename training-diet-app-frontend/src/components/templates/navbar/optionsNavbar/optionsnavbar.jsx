@@ -3,7 +3,7 @@ import "../navbar.css";
 import { ReactComponent as Logo } from "../../../../assets/logo.svg";
 import { Link } from "react-router-dom";
 
-const UserNavbar = () => {
+const OptionsNavbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleMenuToggle = () => {
@@ -14,7 +14,6 @@ const UserNavbar = () => {
     localStorage.removeItem("email");
     localStorage.removeItem("password");
   };
-
   return (
     <nav className="navbar">
       <div className="logo-container">
@@ -25,23 +24,8 @@ const UserNavbar = () => {
       </button>
       <ul className={`menu-list ${menuOpen ? "show" : ""}`}>
         <li>
-          <Link to="/user-page/trainings" className="nav-link">
-            Trainings
-          </Link>
-        </li>
-        <li>
-          <Link to="/user-page/diets" className="nav-link">
-            Diets
-          </Link>
-        </li>
-        <li>
-          <Link to="/user-page/account" className="nav-link">
-            Account
-          </Link>
-        </li>
-        <li>
-          <Link className="logoutlink" to={"/"} onClick={handleLogout}>
-            Logout
+          <Link to="/user-page/" className="nav-link">
+            Menu
           </Link>
         </li>
       </ul>
@@ -49,4 +33,4 @@ const UserNavbar = () => {
   );
 };
 
-export default UserNavbar;
+export default OptionsNavbar;
