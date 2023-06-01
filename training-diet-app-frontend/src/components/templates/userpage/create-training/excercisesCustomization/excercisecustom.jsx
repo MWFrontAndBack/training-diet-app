@@ -14,6 +14,7 @@ const CustomExcercises = (props) => {
       <div className="right">
         <h4>Alternatives:</h4>
         {item.alternatives.map((alternative, idx) => (
+            
           <div key={idx}>
             <p>Name: {alternative.name}</p>
             <p>Series: {alternative.series}</p>
@@ -22,6 +23,8 @@ const CustomExcercises = (props) => {
           </div>
         ))}
       </div>
+
+    
     </div>
   );
 };

@@ -18,7 +18,7 @@ const TrainingMain = () => {
     }
 
     if (username && password) {
-      fetch("http://localhost:8080/api/public/user-page", {
+      fetch("http://localhost:8080/api/public/user-page/trainings", {
         headers: {
           Authorization: "Basic " + btoa(`${username}:${password}`),
         },

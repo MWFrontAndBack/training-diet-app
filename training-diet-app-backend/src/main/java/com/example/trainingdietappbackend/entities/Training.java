@@ -1,6 +1,7 @@
 package com.example.trainingdietappbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ public class Training {
     private String name;
     // lista cwiczen
     private String photo;
-    @Column(length = 500)
+    @Column(length = 2000)
     private String description;
     private int maxAge;
     @JsonBackReference
@@ -86,5 +87,9 @@ public class Training {
 
     public void setExcercieses(List<Excercise> excercieses) {
         this.excercieses = excercieses;
+    }
+@JsonIgnore
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

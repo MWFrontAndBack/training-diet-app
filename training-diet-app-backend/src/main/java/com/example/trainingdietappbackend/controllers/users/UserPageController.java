@@ -8,6 +8,7 @@ import com.example.trainingdietappbackend.entities.Training;
 import com.example.trainingdietappbackend.entities.User;
 import com.example.trainingdietappbackend.entities.additional.ExcerciseAndAlternatives;
 import com.example.trainingdietappbackend.entities.enums.TrainingType;
+import com.example.trainingdietappbackend.repositories.TrainingRepository;
 import com.example.trainingdietappbackend.repositories.UserRepository;
 import com.example.trainingdietappbackend.service.ExcerciseServiceImplement;
 import org.slf4j.Logger;
@@ -27,11 +28,12 @@ public class UserPageController {
 
     ExcerciseServiceImplement excerciseServiceImplement;
     private static final Logger logger = LoggerFactory.getLogger(UserPageController.class);
-
+private TrainingRepository trainingRepository;
     private UserRepository userRepository;
 
-    public UserPageController(ExcerciseServiceImplement excerciseServiceImplement, UserRepository userRepository) {
+    public UserPageController(ExcerciseServiceImplement excerciseServiceImplement, TrainingRepository trainingRepository, UserRepository userRepository) {
         this.excerciseServiceImplement = excerciseServiceImplement;
+        this.trainingRepository = trainingRepository;
         this.userRepository = userRepository;
     }
 
@@ -43,7 +45,7 @@ public class UserPageController {
 //    }
 @CrossOrigin
     @RequestMapping("/trainings")
-    public ResponseEntity<List<Training>> getUsersNotes() {
+    public ResponseEntity<List<Training>> getUserTraining() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = (String) authentication.getPrincipal();
@@ -78,6 +80,20 @@ public class UserPageController {
 return ResponseEntity.ok(excercises);
     }
 
+
+    @PostMapping
+    @RequestMapping("/save-training")
+public ResponseEntity<String> saveTrainingToDb(@RequestBody Training training){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = (String) authentication.getPrincipal();
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        training.setOwner(user);
+        trainingRepository.save(training);
+        return ResponseEntity.ok("saved");
+    }
 //    @PostMapping
 //    @RequestMapping("/add-note")
 //    public ResponseEntity<Note> addNote(@RequestBody Note note) {

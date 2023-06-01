@@ -103,4 +103,17 @@ public class Excercise {
     public void setMachine(TrainingMachine machine) {
         this.machine = machine;
     }
+
+    @Override
+    public String toString() {
+        return "Excercise{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", photo='" + photo + '\'' +
+                ", series=" + series +
+                ", reps=" + reps +
+                ", trainingType=" + trainingType +
+                ", levelOfAdvance=" + levelOfAdvance +
+                '}';
+    }
 }

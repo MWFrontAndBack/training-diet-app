@@ -10,5 +10,5 @@ public interface ExcercisesSercvice {
 
     public List<ExcerciseAndAlternatives> getFOURExcercisesSpecifiedbyTrainngType(TrainingType trainingType);
 
-    public  List<Excercise> find2Different(Long id,TrainingType trainingType);
+    public  List<Excercise> findDifferent(List<Excercise> excercises,TrainingType trainingType);
 }
