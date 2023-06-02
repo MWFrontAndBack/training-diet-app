@@ -21,14 +21,14 @@ export default function MultiActionAreaCard(props) {
           <Typography gutterBottom variant="h5" component="div">
             {item.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Series {item.series}
+          <Typography variant="h6" color="text.secondary">
+            Series: {item.series}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="h6" color="text.secondary">
             Reps {item.reps}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Type {item.trainingType}
+          <Typography variant="h6" color="text.secondary">
+            {item.trainingType}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             <CustomizedRating rate={item.levelOfAdvance} />

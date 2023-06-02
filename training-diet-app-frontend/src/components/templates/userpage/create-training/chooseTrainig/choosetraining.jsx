@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./choose.css";
-import backgroundSVG from "../../../../assets/userpage.svg";
-import OptionsNavbar from "../../navbar/optionsNavbar/optionsnavbar";
+import backgroundSVG from "../../../../../assets/userpage.svg";
+import OptionsNavbar from "../../../../organisms/navbar/optionsNavbar/optionsnavbar";
 
 const ChooseTraining = () => {
   const [select, setSelect] = useState("");

@@ -7,7 +7,13 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 import CustomizedRating from "../../../pages/Trainings/ExcerciseDetails/customRatin";
 export default function MultiActionAreaCardAlternative(props) {
   let item = props.data;
-  console.log(item);
+  const { data, onAlternativeClick } = props;
+
+  const handleAlternativeClick = (event) => {
+    event.preventDefault();
+    onAlternativeClick(data.id);
+  };
+
   return (
     <Card sx={{ maxWidth: 345, backgroundColor: "ActiveBorder" }}>
       <CardActionArea>
@@ -21,13 +27,13 @@ export default function MultiActionAreaCardAlternative(props) {
           <Typography gutterBottom variant="h5" component="div" color="orange">
             {item.name}
           </Typography>
-          <Typography variant="body2" color="orange">
+          <Typography variant="h6" color="orange">
             Series {item.series}
           </Typography>
-          <Typography variant="body2" color="orange">
+          <Typography variant="h6" color="orange">
             Reps {item.reps}
           </Typography>
-          <Typography variant="body2" color="orange">
+          <Typography variant="h6" color="orange">
             Type {item.trainingType}
           </Typography>
           <Typography variant="body2" color="orange">
@@ -35,7 +41,12 @@ export default function MultiActionAreaCardAlternative(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <button>Change</button>
+          <Button
+            variant="contained"
+            onClick={(event) => handleAlternativeClick(event, item.id)}
+          >
+            Change
+          </Button>
         </CardActions>
       </CardActionArea>
     </Card>

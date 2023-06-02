@@ -11,66 +11,30 @@ import image1 from "../../../assets/traininguser.jpg";
 import image2 from "../../../assets/subscribe.jpg";
 import "@splidejs/react-splide/css/sea-green";
 import "./userp.css";
-import { Link } from "react-router-dom";
+import UserPageCard from "../../organisms/card/userPageCard";
 const UserPageMain = () => {
+  let tab1 = {
+    img: image1,
+    desc: "Training and diet",
+    action: "create training",
+    to: "/user-page/create-training",
+  };
+  let tab2 = {
+    img: image2,
+    desc: "Premium Subscription",
+    action: "buy subscription",
+    to: "/",
+  };
   return (
     <Splide aria-label="My Favorite Images">
       <SplideSlide>
         <div className="slide-container">
-          <Card sx={{ maxWidth: 800 }}>
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              height="340"
-              image={image1}
-            />
-            <CardContent>
-              <Typography
-                gutterBottom
-                variant="h5"
-                component="div"
-                sx={{
-                  color: "black",
-                  fontSize: "25px",
-                  fontFamily: "'Luckiest Guy', cursive",
-                }}
-              >
-                Training and diet
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Link to="/user-page/create-training">Create Training</Link>
-            </CardActions>
-          </Card>
+          <UserPageCard data={tab1} />
         </div>
       </SplideSlide>
       <SplideSlide>
         <div className="slide-container">
-          <Card sx={{ maxWidth: 800 }}>
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              height="340"
-              image={image2}
-            />
-            <CardContent>
-              <Typography
-                gutterBottom
-                variant="h5"
-                component="div"
-                sx={{
-                  color: "black",
-                  fontSize: "25px",
-                  fontFamily: "'Luckiest Guy', cursive",
-                }}
-              >
-                Buy Subscription
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Buy subscription</Button>
-            </CardActions>
-          </Card>
+          <UserPageCard data={tab2} />
         </div>
       </SplideSlide>
     </Splide>

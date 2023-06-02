@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import "./useracc.css";
 import { useNavigate } from "react-router-dom";
-import OptionsNavbar from "../../navbar/optionsNavbar/optionsnavbar";
-
+import OptionsNavbar from "../../../organisms/navbar/optionsNavbar/optionsnavbar";
+import GetUserAccoutData from "../../../../sevices/accout/accountservice";
+import backgroundSVG from "../../../../assets/background.svg";
 const UserAccount = () => {
   const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   useEffect(() => {
     const username = localStorage.getItem("email");
@@ -16,14 +16,8 @@ const UserAccount = () => {
       navigate("/login");
     }
 
-    console.log(username);
-    console.log(password);
     if (username && password) {
-      fetch("http://localhost:8080/api/public/user-page/account", {
-        headers: {
-          Authorization: "Basic " + btoa(`${username}:${password}`),
-        },
-      })
+      GetUserAccoutData(username, password)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -33,20 +27,23 @@ const UserAccount = () => {
         })
         .then((data) => {
           setUserData(data);
-          setLoading(false);
-          console.log(data);
         })
         .catch((error) => {
           console.error("Failed to fetch user data", error);
-          setLoading(false);
         });
     }
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage: `url(${backgroundSVG})`,
+        height: "100vh",
+        backgroundSize: "cover",
+      }}
+    >
       <OptionsNavbar />
-      <div className="container">
+      <div className="container-account">
         <div className="content">
           <div className="image-container">
             {userData ? (
@@ -56,11 +53,10 @@ const UserAccount = () => {
             )}
           </div>
           <div className="data-container">
-            <h1 className="title">User Details</h1>
+            <h1 className="title">User Data</h1>
             {userData ? (
               <div>
-                <p className="text">ID: {userData.id}</p>
-                <p className="text">Login Name: {userData.loginName}</p>
+                <p className="text">Login: {userData.loginName}</p>
                 <p className="text">Email: {userData.email}</p>
               </div>
             ) : (

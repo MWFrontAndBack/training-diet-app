@@ -1,13 +1,12 @@
-import ResponsiveAppBar from "../../components/templates/navbar/navbar";
 import HomePage from "../Home/home";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import LoginPage from "../../components/templates/login/login";
 import CreateAccountPage from "../../components/templates/login/createacc";
 import UserPage from "../UserPage/userpage";
 import TrainingsPage from "../Trainings/trainingspage";
 import DietsPage from "../Diets/dietspage";
 import UserAccount from "../../components/templates/userpage/account/account";
-import ChooseTraining from "../../components/templates/userpage/create-training/choosetraining";
+import ChooseTraining from "../../components/templates/userpage/create-training/chooseTrainig/choosetraining";
 import TrainingCustomization from "../../components/templates/userpage/create-training/trainCustomization/traincustomization";
 import CustomExcercises from "../../components/templates/userpage/create-training/excercisesCustomization/excercisecustom";
 import ExcerciseDetails from "../Trainings/ExcerciseDetails/excerciseDetails";

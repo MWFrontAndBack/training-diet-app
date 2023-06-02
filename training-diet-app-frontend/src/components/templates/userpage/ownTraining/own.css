@@ -1,0 +1,14 @@
+.emptytrain {
+  align-items: center;
+  color: rgb(92, 62, 18);
+  font-size: 25px;
+  font-family: "Lobster", cursive;
+  display: flex;
+}
+
+.onwTraningContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: "100vh";
+}

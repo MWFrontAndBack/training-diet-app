@@ -3,12 +3,11 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions, colors } from "@mui/material";
-
-export default function MainDesciption(props) {
-  let image = props.img;
-  let title = props.title;
-  let desc = props.desc;
+import { CardActionArea, CardActions } from "@mui/material";
+export default function MainPageCard(props) {
+  let image = props.data.img;
+  let title = props.data.title;
+  let desc = props.data.desc;
   return (
     <Card
       sx={{

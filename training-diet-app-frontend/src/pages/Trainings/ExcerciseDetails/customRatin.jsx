@@ -16,8 +16,10 @@ const StyledRating = styled(Rating)({
 });
 
 export default function CustomizedRating(props) {
-  let rating = props.rate;
-  console.log(rating);
+  const [value, setValue] = React.useState(props.rating);
+  const handleRatingChange = (event, newValue) => {
+    setValue(newValue);
+  };
   return (
     <Box
       sx={{
@@ -26,8 +28,10 @@ export default function CustomizedRating(props) {
     >
       <Typography component="legend">Level of Advance</Typography>
       <StyledRating
+        value={value}
+        onChange={handleRatingChange}
         name="customized-color"
-        defaultValue={rating}
+        defaultValue={value}
         getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
         precision={0.5}
         icon={<FavoriteIcon fontSize="inherit" />}

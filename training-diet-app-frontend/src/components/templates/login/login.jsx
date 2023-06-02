@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Link, Routes, Route, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DoLogin } from "../../../sevices/login/login";
 import "./login.css";
-import backgroundSVG from "../../../assets/wave.svg";
-import BackNavbar from "../navbar/backnavba";
+import backgroundSVG from "../../../assets/background.svg";
+import BackNavbar from "../../organisms/navbar/backToUserPageNavbar/backnavba";
 
 const LoginPage = () => {
   const [password, setPassword] = useState("");

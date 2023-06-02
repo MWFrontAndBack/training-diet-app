@@ -1,28 +1,40 @@
-import { useState } from "react";
 import "./custom.css";
 import MultiActionAreaCard from "../../../../organisms/card/card";
 import MultiActionAreaCardAlternative from "../../../../organisms/card/alternativeCard";
+import { useState } from "react";
 
 const CustomExcercises = (props) => {
-  let item = props.excercise;
+  const [selectedExercise, setSelectedExercise] = useState(props.excercise);
   const [selectedAlternative, setSelectedAlternative] = useState(null);
-  const handleAlternativeChange = (event) => {
-    setSelectedAlternative(event.target.value);
+
+  const handleAlternativeClick = (id) => {
+    const alt = selectedExercise.alternatives.find(
+      (alternative) => alternative.id === id
+    );
+    setSelectedAlternative(alt);
   };
-  //   console.log(excer);
   return (
     <div id="parent">
       <div className="left">
         <h4>Excercise:</h4>
 
-        <MultiActionAreaCard data={item.excercise} />
+        <MultiActionAreaCard
+          data={
+            selectedAlternative
+              ? selectedAlternative
+              : selectedExercise.excercise
+          }
+        />
       </div>
       <div className="right">
         <h4>Alternatives:</h4>
         <div className="alternatives-row">
-          {item.alternatives.map((alternative, idx) => (
+          {selectedExercise.alternatives.map((alternative, idx) => (
             <div className="altern" key={idx}>
-              <MultiActionAreaCardAlternative data={alternative} />
+              <MultiActionAreaCardAlternative
+                data={alternative}
+                onAlternativeClick={handleAlternativeClick}
+              />
             </div>
           ))}
         </div>

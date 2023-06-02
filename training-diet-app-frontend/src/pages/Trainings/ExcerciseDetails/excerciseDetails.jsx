@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import OptionsNavbar from "../../../components/templates/navbar/optionsNavbar/optionsnavbar";
+import OptionsNavbar from "../../../components/organisms/navbar/optionsNavbar/optionsnavbar";
 import "./excercise.css";
 import CustomizedRating from "./customRatin";
 

@@ -1,9 +1,21 @@
-.containerm {
-  margin-top: 100px;
+.maincontainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
-.containerm > * {
-  margin: 0;
+.maincontainer > * {
+  flex: 1;
+}
+
+.maincontainer > *:first-child {
+  margin-top: 50px;
+  margin-right: 10px;
+  margin-left: 70px;
+}
+
+.maincontainer > *:last-child {
+  margin-top: 50px;
+
+  margin-left: 10px;
+  margin-right: 70px;
 }

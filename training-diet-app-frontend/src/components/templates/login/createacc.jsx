@@ -3,12 +3,12 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { CreateAccount } from "../../../sevices/login/login";
 import "./login.css";
 import backgroundSVG from "../../../assets/wave.svg";
-import BackNavbar from "../navbar/backnavba";
+import BackNavbar from "../../organisms/navbar/backToUserPageNavbar/backnavba";
 const CreateAccountPage = () => {
   const [loginName, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [error, setError] = useState(""); // Add error state variable
+  const [error, setError] = useState("");
   const [redirectToLogin, setRedirectToLogin] = useState(false);
   const navigate = useNavigate();
 
@@ -22,7 +22,8 @@ const CreateAccountPage = () => {
         setRedirectToLogin(true);
       })
       .catch((error) => {
-        setError("Invalid credentials"); // Update the error state if the login request fails
+        setError(error);
+        setError("Invalid credentials");
       });
   };
 
@@ -41,7 +42,6 @@ const CreateAccountPage = () => {
       <BackNavbar />
       <form onSubmit={handleSubmit} className="login-form">
         {error && <p className="error-message">{error}</p>}{" "}
-        {/* Display error message */}
         <label className="customlb">Username:</label>
         <input
           type="text"

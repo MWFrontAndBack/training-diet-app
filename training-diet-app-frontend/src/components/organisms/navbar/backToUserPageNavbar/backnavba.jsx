@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./navbar.css";
-import { ReactComponent as Logo } from "../../../assets/logo.svg";
+import "../navbar.css";
+import { ReactComponent as Logo } from "../../../../assets/logo.svg";
 import { Link } from "react-router-dom";
 
-function CustomNavbar() {
+const BackNavbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleMenuToggle = () => {
@@ -20,18 +20,13 @@ function CustomNavbar() {
       </button>
       <ul className={`menu-list ${menuOpen ? "show" : ""}`}>
         <li>
-          <Link to="/login" className="nav-link">
-            Login
-          </Link>
-        </li>
-        <li>
-          <Link to="/create-acc" className="nav-link">
-            Create account
+          <Link to="/" className="nav-link">
+            Menu
           </Link>
         </li>
       </ul>
     </nav>
   );
-}
+};
 
-export default CustomNavbar;
+export default BackNavbar;
