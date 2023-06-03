@@ -10,6 +10,8 @@ import ChooseTraining from "../../components/templates/userpage/create-training/
 import TrainingCustomization from "../../components/templates/userpage/create-training/trainCustomization/traincustomization";
 import CustomExcercises from "../../components/templates/userpage/create-training/excercisesCustomization/excercisecustom";
 import ExcerciseDetails from "../Trainings/ExcerciseDetails/excerciseDetails";
+import DietCustomization from "../../components/templates/userpage/create-diet/dietCustomization/dietcustomization";
+import MealDetails from "../Diets/MealDetails/mealDetails";
 
 const Main = () => {
   return (
@@ -26,6 +28,11 @@ const Main = () => {
         path="/user-page/create-training/train-customize"
         element={<TrainingCustomization />}
       />
+
+      <Route
+        path="/user-page/create-training/diet-customize"
+        element={<DietCustomization />}
+      />
       <Route
         path="/user-page/create-training/train-customize/excercise"
         element={<CustomExcercises />}
@@ -34,6 +41,7 @@ const Main = () => {
         path="user-page/trainings/details/:id"
         element={<ExcerciseDetails />}
       />
+      <Route path="user-page/diet/details/:id" element={<MealDetails />} />
     </Routes>
   );
 };

@@ -6,15 +6,15 @@ import OptionsNavbar from "../../../../organisms/navbar/optionsNavbar/optionsnav
 import Button from "@mui/material/Button";
 import backgroundSVG from "../../../../../assets/wave.svg";
 import { SaveTrainig } from "../../../../../sevices/training/trainingservice";
+import GetExerciseseByTrainingType from "../../../../../sevices/exercise/exercise";
 
 const TrainingCustomization = () => {
   const [excercise, setExcercise] = useState("");
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState();
   const navigate = useNavigate();
   const [trainingType, setTrainingType] = useState("");
   const [descriptio, setDescription] = useState("");
   const [photo, setPhoto] = useState("");
-
   const saveTrainig = (event) => {
     event.preventDefault();
     let exercices = userData.map((data) => data.excercise);
@@ -32,23 +32,32 @@ const TrainingCustomization = () => {
   };
   const HandleSubmit = (event) => {
     event.preventDefault();
+    console.log(event.target.value);
     fetchUserData(excercise);
   };
 
   const handleChange = (event) => {
+    event.preventDefault();
+
     setExcercise(event.target.value);
+  };
+  const replaceData = (index, mainIndex) => {
+    let userDataIndex = userData.findIndex((d) => {
+      return d.excercise.id === mainIndex;
+    });
+    const updatedUserData = [...userData];
+    const alternatives = updatedUserData[userDataIndex].alternatives;
+    if (alternatives.length > 0) {
+      let copy = updatedUserData[userDataIndex].excercise;
+      updatedUserData[userDataIndex].excercise = alternatives[index];
+      updatedUserData[userDataIndex].alternatives[index] = copy;
+    }
+    setUserData(updatedUserData);
   };
   const fetchUserData = (type) => {
     const username = localStorage.getItem("email");
     const password = localStorage.getItem("password");
-    fetch(
-      `http://localhost:8080/api/public/user-page/excercises?type=${type}`,
-      {
-        headers: {
-          Authorization: "Basic " + btoa(`${username}:${password}`),
-        },
-      }
-    )
+    GetExerciseseByTrainingType(username, password, type)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -58,6 +67,7 @@ const TrainingCustomization = () => {
       })
       .then((data) => {
         setUserData(data);
+        console.log("ok");
         let type = data[0].excercise.trainingType;
 
         setTrainingType(type);
@@ -92,59 +102,51 @@ const TrainingCustomization = () => {
         console.error("Failed to fetch user data", error);
       });
   };
-  const handleAlternativeChange = (index) => {
-    // Logic to change the alternative with the exercise
-    // Update the userData state based on the selected alternative index
-  };
+
   return (
     <div>
       <OptionsNavbar />
-      <div
-        style={{
-          backgroundImage: `url(${backgroundSVG})`,
-          height: "100%",
-          backgroundSize: "cover",
-        }}
-        className="container"
-      >
+      <div className="container">
         <form onSubmit={HandleSubmit} className="comic-form">
-          <label>
+          <label htmlFor="strength">
             <input
               type="radio"
+              id="strength"
               value="STRENGTH"
-              name="return"
+              name="anserw"
               onChange={handleChange}
             />
             Strength Training
           </label>
 
-          <label>
+          <label htmlFor="mobility">
             <input
               type="radio"
+              id="mobility"
               value="MOBILITY"
-              name="return"
+              name="anserw"
               onChange={handleChange}
             />
             Mobility Training
           </label>
 
-          <label>
+          <label htmlFor="endurance">
             <input
               type="radio"
+              id="endurance"
               value="ENDURANCE"
-              name="return"
+              name="anserw"
               onChange={handleChange}
             />
             Endurance Training
           </label>
-
           <input className="submit-button" type="submit" value="Submit" />
         </form>
         <div className="user-data">
           {userData ? (
             userData.map((item, index) => (
               <div key={index}>
-                <CustomExcercises excercise={item} />
+                <CustomExcercises onreplace={replaceData} data={item} />
               </div>
             ))
           ) : (
@@ -154,9 +156,11 @@ const TrainingCustomization = () => {
 
         <div className="save-button">
           {userData ? (
-            <Button variant="contained" onClick={saveTrainig}>
-              Save
-            </Button>
+            <div>
+              <Button variant="contained" onClick={saveTrainig}>
+                Save
+              </Button>
+            </div>
           ) : (
             <p></p>
           )}

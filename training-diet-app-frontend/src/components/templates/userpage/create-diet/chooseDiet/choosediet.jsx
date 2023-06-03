@@ -1,25 +1,4 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./choose.css";
-import backgroundSVG from "../../../../../assets/userpage.svg";
-import OptionsNavbar from "../../../../organisms/navbar/optionsNavbar/optionsnavbar";
-
-const ChooseTraining = () => {
-  const [select, setSelect] = useState("");
-
-  const navigate = useNavigate();
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (select === "train") {
-      navigate("/user-page/create-training/train-customize");
-    } else {
-      navigate("/user-page/create-training/diet-customize");
-    }
-  };
-
-  const handleChange = (event) => {
-    setSelect(event.target.value);
-  };
+const ChooseDiet = () => {
   return (
     <div>
       <OptionsNavbar />
@@ -56,4 +35,4 @@ const ChooseTraining = () => {
   );
 };
 
-export default ChooseTraining;
+export default ChooseDiet;

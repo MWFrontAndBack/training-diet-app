@@ -16,7 +16,7 @@ const StyledRating = styled(Rating)({
 });
 
 export default function CustomizedRating(props) {
-  const [value, setValue] = React.useState(props.rating);
+  const [value, setValue] = React.useState(props.rate);
   const handleRatingChange = (event, newValue) => {
     setValue(newValue);
   };

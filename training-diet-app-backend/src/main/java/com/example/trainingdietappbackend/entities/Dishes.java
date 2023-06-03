@@ -28,4 +28,61 @@ public class Dishes {
     private String photo;
     private double calories;
     private MealType mealType;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public double getCalories() {
+        return calories;
+    }
+
+    public MealType getMealType() {
+        return mealType;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+
+    public void setCalories(double calories) {
+        this.calories = calories;
+    }
+
+    public void setMealType(MealType mealType) {
+        this.mealType = mealType;
+    }
+
+    public void setDiet(Diet diet) {
+        this.diet = diet;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Dishes{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", photo='" + photo + '\'' +
+                ", calories=" + calories +
+                ", mealType=" + mealType +
+                '}';
+    }
 }

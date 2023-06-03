@@ -36,7 +36,7 @@ public class Training {
     @JoinColumn(name ="user_id" )
     private User owner;
 
-    @OneToMany(mappedBy = "training", orphanRemoval = true, cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "training")
     private List<Excercise> excercieses = new ArrayList<>();
 
 

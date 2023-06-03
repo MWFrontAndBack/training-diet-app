@@ -40,9 +40,11 @@ const OwnTrainings = () => {
       ) : userData && userData.length > 0 ? (
         <div className="parent">
           {userData.map((item) => (
-            <div className="column">
-              <TrainingDetails val={item} ondelete={handleNoteDeletion} />
-            </div>
+            <TrainingDetails
+              key={item.id}
+              val={item}
+              ondelete={handleNoteDeletion}
+            />
           ))}
         </div>
       ) : (

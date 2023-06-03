@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import DietDetails from "./dietDetails";
-import GetAllDiets from "../../../../sevices/diets/dietService";
+import { GetAllDiets } from "../../../../sevices/diets/dietService";
 
 const OwnDiets = () => {
   const [userData, setUserData] = useState(null);
@@ -23,9 +23,10 @@ const OwnDiets = () => {
           }
         })
         .then((data) => {
+          // console.log(data);
+
           setUserData(data);
           setLoading(false);
-          console.log(data);
         })
         .catch((error) => {
           console.error("Failed to fetch user data", error);
@@ -41,7 +42,7 @@ const OwnDiets = () => {
         <div className="parent">
           {userData.map((item) => (
             <div className="column">
-              <DietDetails val={item} ondelte={handleNoteDeletion} />
+              <DietDetails val={item} ondelete={handleNoteDeletion} />
             </div>
           ))}
         </div>

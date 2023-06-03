@@ -97,6 +97,14 @@ private  Statistics statistics;
         this.id = id;
     }
 
+    public List<Diet> getDiets() {
+        return diets;
+    }
+
+    public void setDiets(List<Diet> diets) {
+        this.diets = diets;
+    }
+
     public String getLoginName() {
         return loginName;
     }

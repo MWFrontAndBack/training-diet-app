@@ -1,14 +1,18 @@
 import { useState } from "react";
 import "./details.css";
-
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { Button, CardActions } from "@mui/material";
 import { DelteteTrainigById } from "../../../../sevices/training/trainingservice";
-import TrainingCard from "../../../organisms/card/trainingCard";
+import { Link } from "react-router-dom";
 
 const TrainingDetails = (props) => {
   const [isDeleted, setIsDeleted] = useState(false);
 
   const { id, name, description, maxAge, photo, excercieses } = props.val;
-  const training = { id, name, description, maxAge, photo, excercieses };
 
   const handleDelelte = () => {
     const username = localStorage.getItem("email");
@@ -18,6 +22,7 @@ const TrainingDetails = (props) => {
         .then((response) => {
           if (response.ok) {
             props.ondelete(id);
+            setIsDeleted(true);
           } else {
             console.log("Failed to delete note");
           }
@@ -33,7 +38,29 @@ const TrainingDetails = (props) => {
 
   return (
     <div>
-      <TrainingCard data={training} onClick={handleDelelte} />
+      <Card sx={{ maxWidth: 345 }}>
+        <CardMedia sx={{ height: 140 }} image={photo} title="green iguana" />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {name}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {description}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <button onClick={handleDelelte} className="delte-perfect">
+            Delete
+          </button>
+          <Link
+            className="link-perfect"
+            to={`/user-page/trainings/details/${id}`}
+            state={{ data: excercieses }}
+          >
+            Details
+          </Link>
+        </CardActions>
+      </Card>
     </div>
   );
 };
