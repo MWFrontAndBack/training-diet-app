@@ -19,7 +19,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/public/user-page")
@@ -28,13 +30,12 @@ public class UserPageController {
 
     ExcerciseServiceImplement excerciseServiceImplement;
     private static final Logger logger = LoggerFactory.getLogger(UserPageController.class);
-private TrainingRepository trainingRepository;
+    private TrainingRepository trainingRepository;
     private UserRepository userRepository;
     private ExcerciserRepository excerciserRepository;
     private MealServiceImplement mealsServiceImplement;
-private DietRepository dietRepository;
-private DishesRepostiory dishesRepostiory;
-
+    private DietRepository dietRepository;
+    private DishesRepostiory dishesRepostiory;
 
 
     public UserPageController(ExcerciseServiceImplement excerciseServiceImplement, TrainingRepository trainingRepository, UserRepository userRepository, ExcerciserRepository excerciserRepository, MealServiceImplement mealsServiceImplement, DietRepository dietRepository, DishesRepostiory dishesRepostiory) {
@@ -47,7 +48,7 @@ private DishesRepostiory dishesRepostiory;
         this.dishesRepostiory = dishesRepostiory;
     }
 
-@CrossOrigin
+    @CrossOrigin
     @RequestMapping("/trainings")
     public ResponseEntity<List<Training>> getUserTraining() {
 
@@ -92,24 +93,24 @@ private DishesRepostiory dishesRepostiory;
 
     @PostMapping
     @RequestMapping("/excercises")
-    public ResponseEntity<List<ExcerciseAndAlternatives>> get4Excercises( @RequestParam("type")TrainingType type) {
+    public ResponseEntity<List<ExcerciseAndAlternatives>> get4Excercises(@RequestParam("type") TrainingType type) {
         List<ExcerciseAndAlternatives> excercises = excerciseServiceImplement.getFOURExcercisesSpecifiedbyTrainngType(type);
 
-return ResponseEntity.ok(excercises);
+        return ResponseEntity.ok(excercises);
     }
 
     @PostMapping
     @RequestMapping("/meals")
-    public ResponseEntity<List<MealAlternatives>> get4Meals( @RequestParam("type") MealType type) {
+    public ResponseEntity<List<MealAlternatives>> get4Meals(@RequestParam("type") MealType type) {
         logger.info("fetch data");
         List<MealAlternatives> meals = mealsServiceImplement.getFOURMealsSpecifiedbMealType(type);
-        logger.info("meals alt size" +meals.size());
+        logger.info("meals alt size" + meals.size());
         return ResponseEntity.ok(meals);
     }
 
     @PostMapping
     @RequestMapping("/save-training")
-public ResponseEntity<String> saveTrainingToDb(@RequestBody Training training){
+    public ResponseEntity<String> saveTrainingToDb(@RequestBody Training training) {
         logger.info("trainig-saved" + training);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = (String) authentication.getPrincipal();
@@ -131,7 +132,7 @@ public ResponseEntity<String> saveTrainingToDb(@RequestBody Training training){
 
     @PostMapping
     @RequestMapping("/save-diet")
-    public ResponseEntity<String> saveDietToDb(@RequestBody Diet diet){
+    public ResponseEntity<String> saveDietToDb(@RequestBody Diet diet) {
         logger.info("trainig-saved" + diet);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = (String) authentication.getPrincipal();
@@ -163,11 +164,10 @@ public ResponseEntity<String> saveTrainingToDb(@RequestBody Training training){
         }
         Training delted = trainingRepository.findById(id).orElseThrow();
 
-for(Excercise exercise: delted.getExcercieses()){
-    exercise.setTraining(null);
-    excerciserRepository.save(exercise);
-}
-
+        for (Excercise exercise : delted.getExcercieses()) {
+            exercise.setTraining(null);
+            excerciserRepository.save(exercise);
+        }
 
 
         trainingRepository.delete(delted);
@@ -177,6 +177,7 @@ for(Excercise exercise: delted.getExcercieses()){
 
 
     }
+
     @DeleteMapping
     @RequestMapping(("/delete-diet/{id}"))
     public ResponseEntity<Diet> delteDiet(@PathVariable(name = "id") Long id) {
@@ -189,7 +190,7 @@ for(Excercise exercise: delted.getExcercieses()){
         }
         Diet delted = dietRepository.findById(id).orElseThrow();
 
-        for(Dishes dish: delted.getDishesList()){
+        for (Dishes dish : delted.getDishesList()) {
             dish.setDiet(null);
             dishesRepostiory.save(dish);
         }
@@ -200,5 +201,31 @@ for(Excercise exercise: delted.getExcercieses()){
 
 
     }
+
+
+    @PostMapping
+    @RequestMapping(("/update-user"))
+    public ResponseEntity<User> updateUserToPremium() {
+//logger.info(data);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = (String) authentication.getPrincipal();
+        User user = userRepository.findByEmail(email);
+        logger.info("updated user" + user);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        Authority authority2 = new Authority();
+        authority2.setAuthority("ROLE_PREMIUM");
+        Set<Authority> authorities2 = new HashSet<>();
+        authorities2.add(authority2);
+        authority2.setUser(user);
+        user.setAuthorities(authorities2);
+        userRepository.save(user);
+
+        return ResponseEntity.ok(user);
+
+
+    }
+
 
 }

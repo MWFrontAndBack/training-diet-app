@@ -16,4 +16,8 @@ const SaveDiet = (username, password, dietToSave) => {
     body: JSON.stringify(dietToSave),
   });
 };
-export { GetAllDiets, SaveDiet };
+
+const CountCalories = (data) => {
+  return data.reduce((start, next) => start + next.dish.calories, 0);
+};
+export { GetAllDiets, SaveDiet, CountCalories };

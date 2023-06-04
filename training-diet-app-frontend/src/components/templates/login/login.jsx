@@ -27,10 +27,16 @@ const LoginPage = () => {
 
         localStorage.setItem("email", email);
         localStorage.setItem("password", password);
+        localStorage.setItem("role", "normal");
+
         if (authority === "ROLE_USER") {
           navigate("/user-page", { state: data });
         } else if (authority === "ROLE_ADMIN") {
           navigate("/admin-page");
+        } else if (authority === "ROLE_PREMIUM") {
+          localStorage.setItem("role", "premium");
+
+          navigate("/premium-page");
         }
       })
       .catch((error) => {

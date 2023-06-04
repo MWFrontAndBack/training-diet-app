@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/api/public/create-user")).permitAll()
 
                 .requestMatchers(new AntPathRequestMatcher("/api/public/login")).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/api/public/user-page/**")).hasAnyRole("USER","ADMIN")
+                .requestMatchers(new AntPathRequestMatcher("/api/public/user-page/**")).hasAnyRole("USER","ADMIN","PREMIUM")
                 .requestMatchers(new AntPathRequestMatcher("/api/public/admin-page")).hasRole("ADMIN")
 
                 .anyRequest().authenticated()

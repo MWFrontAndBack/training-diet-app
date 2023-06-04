@@ -12,6 +12,7 @@ import CustomExcercises from "../../components/templates/userpage/create-trainin
 import ExcerciseDetails from "../Trainings/ExcerciseDetails/excerciseDetails";
 import DietCustomization from "../../components/templates/userpage/create-diet/dietCustomization/dietcustomization";
 import MealDetails from "../Diets/MealDetails/mealDetails";
+import PremiumPage from "../UserPage/premiumpage";
 
 const Main = () => {
   return (
@@ -42,6 +43,7 @@ const Main = () => {
         element={<ExcerciseDetails />}
       />
       <Route path="user-page/diet/details/:id" element={<MealDetails />} />
+      <Route path="/premium-page" element={<PremiumPage />} />
     </Routes>
   );
 };

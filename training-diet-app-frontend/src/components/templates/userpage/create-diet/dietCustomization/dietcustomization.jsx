@@ -4,10 +4,12 @@ import OptionsNavbar from "../../../../organisms/navbar/optionsNavbar/optionsnav
 import CustomMeal from "../mealCustomization/custommeal";
 import { Button } from "@mui/material";
 import "./customization.css";
-import { SaveDiet } from "../../../../../sevices/diets/dietService";
+import {
+  CountCalories,
+  SaveDiet,
+} from "../../../../../sevices/diets/dietService";
 import { useNavigate } from "react-router-dom";
 import { GetMealByMealType } from "../../../../../sevices/meals/meals";
-
 const DietCustomization = () => {
   const [descriptio, setDescription] = useState("");
   const [photo, setPhoto] = useState("");
@@ -24,10 +26,6 @@ const DietCustomization = () => {
 
     setMeal(event.target.value);
   };
-  const countCalories = () => {
-    let suma = userData.reduce((start, next) => start + next.dish.calories, 0);
-    setSumcal(suma);
-  };
 
   const replaceData = (index, mainIndex) => {
     //new calories
@@ -43,7 +41,8 @@ const DietCustomization = () => {
       updatedUserData[userDataIndex].alternatives[index] = copy;
     }
     setUserData(updatedUserData);
-    countCalories();
+    let count = CountCalories(userData);
+    setSumcal(count);
   };
 
   const saveDiet = (event) => {
@@ -75,10 +74,11 @@ const DietCustomization = () => {
         }
       })
       .then((data) => {
+        console.log("fetched");
         setUserData(data);
-        console.log("ok");
-        console.log(data);
-        countCalories();
+
+        let count = CountCalories(data);
+        setSumcal(count);
         let type = data[0].dish.mealType;
 
         setMeal(type);
