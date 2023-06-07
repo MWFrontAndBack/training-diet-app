@@ -1,11 +1,11 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Typography from "@mui/material/Typography";
-
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
     color: "#ff6d75",
@@ -17,9 +17,10 @@ const StyledRating = styled(Rating)({
 
 export default function CustomizedRating(props) {
   const [value, setValue] = React.useState(props.rate);
-  const handleRatingChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  useEffect(() => {
+    setValue(props.rate);
+  }, [props.rate]);
+
   return (
     <Box
       sx={{
@@ -29,9 +30,8 @@ export default function CustomizedRating(props) {
       <Typography component="legend">Level of Advance</Typography>
       <StyledRating
         value={value}
-        onChange={handleRatingChange}
         name="customized-color"
-        defaultValue={value}
+        defaultValue={0}
         getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
         precision={0.5}
         icon={<FavoriteIcon fontSize="inherit" />}

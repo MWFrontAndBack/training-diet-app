@@ -182,17 +182,39 @@ public class InitDatabase {
                 exercises.add(exercise);
             }
             excerciserRepository.saveAll(exercises);
+            Random ranomalg = new Random();
 
 
             List<Dishes> dishesInit = new ArrayList<>();
             for (int i = 1; i <= 40; i++) {
+                int randomNumber = ranomalg.nextInt(3);
+
                 int random = (int) (Math.random() * (700 - 100)) + 300;
                 Dishes dishes = Dishes.builder()
                         .name("Dish " + i)
                         .photo("exercise" + i + ".jpg")
 
                                 .calories(random).mealType(MealType.values()[i%3]).build();
+                AllergicIngredients al1 = AllergicIngredients.builder().name("orzechy").photo("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNgDj6iUc4VGldBvCcMkjFFqbbdclnJrQ3hQ&usqp=CAU").description("Orzechy włoskie,Orzechy laskowe, Orzechy arachidowe, zwane fistaszkami").build();
+                AllergicIngredients al2 = AllergicIngredients.builder().name("kakao").photo("https://i0.wp.com/www.palarniakawyjawa.pl/wp-content/uploads/2019/10/Kakao_s.jpg?fit=300%2C300&ssl=1").description("Kakao to ciemnobrązowy proszek, który powstaje z nasion kakaowca. Są one czyszczone, sortowane, poddawane fermentacji, prażeniu, łuszczeniu, rozdrobnieniu i odtłuszczeniu. ").build();
+                AllergicIngredients al3 = AllergicIngredients.builder().name("jajka").photo("https://radioolsztyn.pl/wp-content/uploads/2017/11/jajka-1024x419.jpg").description("Przeciętne jajo kurze waży ok. 50 g, w tym skorupka i błony 5 g. Gęstość względna zależy od jego wieku i waha się w przedziale 1000–1096 g/dm³.").build();
                 dishesInit.add(dishes);
+
+                if (randomNumber == 0) {
+                dishes.setIngridient(al1);
+
+                al1.setDishes(dishes);}
+                if (randomNumber == 1) {
+                    dishes.setIngridient(al2);
+
+                    al1.setDishes(dishes);}
+
+                if (randomNumber == 2) {
+                    dishes.setIngridient(al3);
+
+                    al1.setDishes(dishes);}
+
+
             }
             dishesRepostiory.saveAll(dishesInit);
 

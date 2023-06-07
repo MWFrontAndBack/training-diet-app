@@ -37,9 +37,6 @@ public class Diet {
     @OneToMany(mappedBy = "diet")
     private List<Dishes> dishesList;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "diet", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<AllergicIngredients> allergicIngredients;
 
     public Long getId() {
         return id;
@@ -94,11 +91,6 @@ public class Diet {
         this.owner = owner;
     }
 
-    public List<AllergicIngredients> getAllergicIngredients() {
-        return allergicIngredients;
-    }
 
-    public void setAllergicIngredients(List<AllergicIngredients> allergicIngredients) {
-        this.allergicIngredients = allergicIngredients;
-    }
+
 }

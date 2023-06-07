@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Dishes {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @JsonBackReference
 
@@ -29,8 +29,16 @@ public class Dishes {
     private double calories;
     private MealType mealType;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ingredients_id" ,referencedColumnName = "id")
+    private AllergicIngredients ingridient;
+
     public Long getId() {
         return id;
+    }
+
+    public AllergicIngredients getIngridient() {
+        return ingridient;
     }
 
     public String getName() {
@@ -74,6 +82,9 @@ public class Dishes {
         this.diet = diet;
     }
 
+    public void setIngridient(AllergicIngredients ingridient) {
+        this.ingridient = ingridient;
+    }
 
     @Override
     public String toString() {

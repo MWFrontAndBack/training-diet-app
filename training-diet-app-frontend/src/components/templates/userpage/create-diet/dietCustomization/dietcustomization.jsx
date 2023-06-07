@@ -17,6 +17,7 @@ const DietCustomization = () => {
   const [sumcal, setSumcal] = useState();
   const [userData, setUserData] = useState(null);
   const [meal, setMeal] = useState();
+  const [alergic, setAlergic] = useState();
   const HandleSubmit = (event) => {
     event.preventDefault();
     fetchUserData(meal);
@@ -26,7 +27,17 @@ const DietCustomization = () => {
 
     setMeal(event.target.value);
   };
+  const setAlergics = (all) => {
+    let ing = [];
+    all.forEach((a) => {
+      let element = a.dish.ingridient;
+      ing.push(element);
+    });
+    let names = ing.map((i) => i.name);
+    let uniqueNames = Array.from(new Set(names));
 
+    setAlergic(uniqueNames);
+  };
   const replaceData = (index, mainIndex) => {
     //new calories
 
@@ -43,6 +54,8 @@ const DietCustomization = () => {
     setUserData(updatedUserData);
     let count = CountCalories(userData);
     setSumcal(count);
+    console.log(userData);
+    setAlergics(userData);
   };
 
   const saveDiet = (event) => {
@@ -76,11 +89,12 @@ const DietCustomization = () => {
       .then((data) => {
         console.log("fetched");
         setUserData(data);
+        console.log(data);
 
         let count = CountCalories(data);
         setSumcal(count);
         let type = data[0].dish.mealType;
-
+        setAlergics(data);
         setMeal(type);
 
         if (type === "WEGETARIAN") {
@@ -161,6 +175,14 @@ const DietCustomization = () => {
           {userData ? (
             <div>
               <p className="calories">Suma karlori {sumcal} kcal</p>
+              <p className="calories">
+                Alergeny:
+                {alergic.map((a, index) => (
+                  <div key={index} className="comic-div">
+                    <p className="alergic"> {a}</p>
+                  </div>
+                ))}
+              </p>
 
               <Button variant="contained" onClick={saveDiet}>
                 Save

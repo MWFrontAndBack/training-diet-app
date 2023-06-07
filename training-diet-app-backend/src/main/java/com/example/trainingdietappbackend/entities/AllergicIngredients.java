@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name ="alergic_ingredients")
+@Table(name ="ingredients")
 
 @Builder
 
@@ -17,13 +17,31 @@ public class AllergicIngredients {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name ="diet_id" )
-    private Diet diet;
+
     private String name;
     private String photo;
     private String description;
 
+    @OneToOne(mappedBy = "ingridient")
+    private Dishes dishes;
 
+    public void setDishes(Dishes dishes) {
+        this.dishes = dishes;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
