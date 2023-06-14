@@ -4,12 +4,14 @@ import OptionsNavbar from "../../../../organisms/navbar/optionsNavbar/optionsnav
 import CustomMeal from "../mealCustomization/custommeal";
 import { Button } from "@mui/material";
 import "./customization.css";
+
 import {
   CountCalories,
   SaveDiet,
 } from "../../../../../sevices/diets/dietService";
 import { useNavigate } from "react-router-dom";
 import { GetMealByMealType } from "../../../../../sevices/meals/meals";
+import RequireLogin from "../../../../../pages/UserPage/requireLogin";
 const DietCustomization = () => {
   const [descriptio, setDescription] = useState("");
   const [photo, setPhoto] = useState("");
@@ -63,7 +65,7 @@ const DietCustomization = () => {
     let list = userData.map((data) => data.dish);
     console.log(photo);
     const diet = {
-      calories: 200,
+      calories: sumcal,
       dietName: meal,
       url: photo,
       description: descriptio,
@@ -129,6 +131,7 @@ const DietCustomization = () => {
   };
   return (
     <div>
+      <RequireLogin />
       <OptionsNavbar />
       <div className="container">
         <form onSubmit={HandleSubmit} className="comic-form ">

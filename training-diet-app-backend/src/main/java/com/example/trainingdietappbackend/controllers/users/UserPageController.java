@@ -19,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,7 +60,7 @@ public class UserPageController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        return ResponseEntity.ok().body(user.getTrainings());
+        return ResponseEntity.ok().body(user.showTrainings());
     }
 
     @CrossOrigin
@@ -73,7 +74,7 @@ public class UserPageController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        return ResponseEntity.ok().body(user.getDiets());
+        return ResponseEntity.ok().body(user.showDiets());
     }
 
     @RequestMapping("/account")
@@ -118,14 +119,15 @@ public class UserPageController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        training.setOwner(user);
+        Training trainingTosave = user.saveTraining(training);
+//        training.setOwner(user);
+//
+//        for (Excercise exercise : training.getExcercieses()) {
+//            exercise.setTraining(training);
+//        }
 
-        for (Excercise exercise : training.getExcercieses()) {
-            exercise.setTraining(training);
-        }
-
-        trainingRepository.save(training);
-        excerciserRepository.saveAll(training.getExcercieses());
+        trainingRepository.save(trainingTosave);
+        excerciserRepository.saveAll(trainingTosave.getExcercieses());
         return ResponseEntity.ok("saved");
     }
 
@@ -140,15 +142,16 @@ public class UserPageController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        diet.setOwner(user);
-
-        for (Dishes dish : diet.getDishesList()) {
-            dish.setDiet(diet);
-        }
+        Diet dietToSave = user.saveDiet(diet);
+//        diet.setOwner(user);
+//
+//        for (Dishes dish : diet.getDishesList()) {
+//            dish.setDiet(diet);
+//        }
 
         logger.info("diet phto" + diet.getUrl());
-        dietRepository.save(diet);
-        dishesRepostiory.saveAll(diet.getDishesList());
+        dietRepository.save(dietToSave);
+        dishesRepostiory.saveAll(dietToSave.getDishesList());
         return ResponseEntity.ok("saved");
     }
 
@@ -206,7 +209,6 @@ public class UserPageController {
     @PostMapping
     @RequestMapping(("/update-user"))
     public ResponseEntity<User> updateUserToPremium() {
-//logger.info(data);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = (String) authentication.getPrincipal();
         User user = userRepository.findByEmail(email);
@@ -227,5 +229,20 @@ public class UserPageController {
 
     }
 
+    @PostMapping
+    @RequestMapping(("/update-userData"))
+    public ResponseEntity<User> updateUserData(@RequestBody LocalDate birthDate, @RequestBody double height,@RequestBody double weight) {
+        logger.info("weight" + weight +height);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = (String) authentication.getPrincipal();
+        User user = userRepository.findByEmail(email);
+        logger.info("updated user" + user);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok(user);
+
+    }
 
 }

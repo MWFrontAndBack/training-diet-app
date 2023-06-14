@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DietDetails from "./dietDetails";
 import { GetAllDiets } from "../../../../sevices/diets/dietService";
+import RequireLogin from "../../../../pages/UserPage/requireLogin";
 
 const OwnDiets = () => {
   const [userData, setUserData] = useState(null);
@@ -23,8 +24,6 @@ const OwnDiets = () => {
           }
         })
         .then((data) => {
-          // console.log(data);
-
           setUserData(data);
           setLoading(false);
         })
@@ -36,6 +35,7 @@ const OwnDiets = () => {
   }, []);
   return (
     <div className="onwTraningContainer">
+      <RequireLogin />
       {loading ? (
         <p>Loading...</p>
       ) : userData && userData.length > 0 ? (

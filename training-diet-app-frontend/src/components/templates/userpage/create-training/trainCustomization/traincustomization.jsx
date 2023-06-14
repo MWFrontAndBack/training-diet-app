@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import backgroundSVG from "../../../../../assets/wave.svg";
 import { SaveTrainig } from "../../../../../sevices/training/trainingservice";
 import GetExerciseseByTrainingType from "../../../../../sevices/exercise/exercise";
+import RequireLogin from "../../../../../pages/UserPage/requireLogin";
 
 const TrainingCustomization = () => {
   const [excercise, setExcercise] = useState("");
@@ -105,6 +106,7 @@ const TrainingCustomization = () => {
 
   return (
     <div>
+      <RequireLogin />
       <OptionsNavbar />
       <div className="container">
         <form onSubmit={HandleSubmit} className="comic-form">

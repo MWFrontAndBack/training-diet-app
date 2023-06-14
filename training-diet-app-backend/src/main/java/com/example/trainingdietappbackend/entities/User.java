@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Entity
@@ -149,6 +150,33 @@ private  Statistics statistics;
 
     public List<Training> getTrainings() {
         return trainings;
+    }
+
+    public long calculateAte(){
+        return  ChronoUnit.YEARS.between(birthDate,LocalDate.now());
+
+    }
+    public List<Training> showTrainings(){
+        return getTrainings();
+    }
+    public List<Diet> showDiets(){
+        return getDiets();
+    }
+
+    public Diet saveDiet(Diet diet){
+        diet.setOwner(this);
+        for (Dishes dish : diet.getDishesList()) {
+            dish.setDiet(diet);
+        }
+        return  diet;
+    }
+
+    public Training saveTraining(Training training){
+        training.setOwner(this);
+        for (Excercise exercise : training.getExcercieses()) {
+            exercise.setTraining(training);
+        }
+        return  training;
     }
 
     @Override

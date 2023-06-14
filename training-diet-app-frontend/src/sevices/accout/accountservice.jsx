@@ -5,4 +5,5 @@ const GetUserAccoutData = (username, password) => {
     },
   });
 };
+
 export default GetUserAccoutData;

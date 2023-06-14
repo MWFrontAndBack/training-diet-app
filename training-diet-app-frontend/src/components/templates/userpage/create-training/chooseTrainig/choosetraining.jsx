@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./choose.css";
 import backgroundSVG from "../../../../../assets/userpage.svg";
 import OptionsNavbar from "../../../../organisms/navbar/optionsNavbar/optionsnavbar";
+import RequireLogin from "../../../../../pages/UserPage/requireLogin";
 
 const ChooseTraining = () => {
   const [select, setSelect] = useState("");
@@ -22,6 +23,7 @@ const ChooseTraining = () => {
   };
   return (
     <div>
+      <RequireLogin />
       <OptionsNavbar />
       <div
         className="center"

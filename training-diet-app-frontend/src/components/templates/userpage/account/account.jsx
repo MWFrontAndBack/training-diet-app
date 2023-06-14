@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import OptionsNavbar from "../../../organisms/navbar/optionsNavbar/optionsnavbar";
 import GetUserAccoutData from "../../../../sevices/accout/accountservice";
 import backgroundSVG from "../../../../assets/background.svg";
+import RequireLogin from "../../../../pages/UserPage/requireLogin";
 const UserAccount = () => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
@@ -12,15 +13,24 @@ const UserAccount = () => {
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
 
-  const handleSubmit = () => {};
-  useEffect(() => {
+  const handleSubmit = () => {
     const username = localStorage.getItem("email");
     const password = localStorage.getItem("password");
     const loggedIn = localStorage.getItem("isLoggedIn");
 
-    if (loggedIn !== "true") {
-      navigate("/login");
+    const data = {
+      birthDate: birthDate,
+      height: height,
+      weight: weight,
+    };
+
+    if (username && password) {
     }
+  };
+  useEffect(() => {
+    const username = localStorage.getItem("email");
+    const password = localStorage.getItem("password");
+    const loggedIn = localStorage.getItem("isLoggedIn");
 
     if (username && password) {
       GetUserAccoutData(username, password)
@@ -48,6 +58,7 @@ const UserAccount = () => {
         backgroundSize: "cover",
       }}
     >
+      <RequireLogin />
       <OptionsNavbar />
       <div className="container-account">
         <div className="content">
@@ -90,6 +101,7 @@ const UserAccount = () => {
 
             <label className="customlb">BrithDate:</label>
             <input
+              required
               type="date"
               value={birthDate}
               onChange={(e) => setBirthDate(e.target.value)}
@@ -99,6 +111,7 @@ const UserAccount = () => {
 
             <label className="customlb">Height:</label>
             <input
+              required
               type="number"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
@@ -106,6 +119,7 @@ const UserAccount = () => {
 
             <label className="customlb">Weight:</label>
             <input
+              required
               type="number"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}

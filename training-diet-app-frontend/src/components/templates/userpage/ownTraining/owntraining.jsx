@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import TrainingDetails from "./trainingDetails";
 import "./own.css";
 import { GetAllTrainings } from "../../../../sevices/training/trainingservice";
+import RequireLogin from "../../../../pages/UserPage/requireLogin";
+
 const OwnTrainings = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+
   const handleNoteDeletion = (id) => {
     setUserData((prevUserData) =>
       prevUserData.filter((item) => item.id !== id)
@@ -35,6 +38,7 @@ const OwnTrainings = () => {
   }, []);
   return (
     <div className="onwTraningContainer">
+      <RequireLogin />
       {loading ? (
         <p>Loading...</p>
       ) : userData && userData.length > 0 ? (
